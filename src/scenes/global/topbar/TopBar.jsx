@@ -30,8 +30,6 @@ function Topbar() {
   return (
     <>
       <Box
-        display="flex"
-        justifyContent="space-between"
         className="topbar-container"
         pl={1}
         mb={0.3}
@@ -70,11 +68,14 @@ function Topbar() {
               </IconButton>
             </Box>
           )}
-          <Box p={1} className="component-name">
+          <Box
+            p={1}
+            className="component-name"
+            sx={{ display: "flex", justifyContent: "center", width: "100%" }}
+          >
             <Typography
               sx={{
                 color: "var(--text-100, #1C4980)",
-                fontFeatureSettings: "'clig' off, 'liga' off",
                 fontFamily: "Inter",
                 fontSize: "20px",
                 fontStyle: "normal",
@@ -85,66 +86,6 @@ function Topbar() {
               {location.pathname.replace(/\//g, "")}
             </Typography>
           </Box>
-          <Divider sx={{ ml: 3, mr: 3 }} orientation="vertical" flexItem />
-
-          <Box
-            sx={{
-              "@media (max-width: 600px)": {
-                display: "none",
-              },
-            }}
-          >
-            <SubNav
-              border={true}
-              value={
-                <>
-                  My {}
-                  {location.pathname.replace(/\//g, "")}
-                </>
-              }
-            />
-          </Box>
-        </Box>
-        <Box
-          pr={1}
-          className="right"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            color: "#1C4980",
-            "@media (max-width: 900px)": {
-              pr: 0,
-            },
-          }}
-        >
-          <IconButton>
-            <PhoneAndroidIcon />
-          </IconButton>
-        </Box>
-      </Box>
-
-      <Box
-        sx={{
-          display: "none",
-          "@media (max-width: 600px)": {
-            display: "flex",
-            justifyContent: "space-between",
-          },
-        }}
-      >
-        <Box width={"50%"}>
-          <SubNav
-            border={true}
-            value={
-              <>
-                My {}
-                {location.pathname.replace(/\//g, "")}
-              </>
-            }
-          />
-        </Box>
-        <Box width={"50%"}>
-          <SubNav color="#3E6493" value="Unstop Assessment" />
         </Box>
       </Box>
     </>
