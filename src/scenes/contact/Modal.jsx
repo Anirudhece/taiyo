@@ -34,9 +34,11 @@ export default function Modal() {
   };
 
   const handleSave = () => {
-    dispatch(saveContactInfoReducer(formData));
-    handleClose();
-    setFormData({});
+    if (formData.firstName && formData.lastName && formData.status) {
+      dispatch(saveContactInfoReducer(formData));
+      handleClose();
+      setFormData({});
+    }
   };
   const descriptionElementRef = useRef(null);
   useEffect(() => {
@@ -59,7 +61,7 @@ export default function Modal() {
 
   return (
     <Dialog
-      fullWidth="true"
+      fullWidth={true}
       width="sm"
       open={isOpen}
       onClose={handleClose}
@@ -94,7 +96,7 @@ export default function Modal() {
             </IconButton>
           </Box>
         </DialogTitle>
-        <DialogContent Boxiders={scroll === "body"}>
+        <DialogContent dividers={scroll === "body"}>
           <DialogContentText
             id="scroll-dialog-description"
             ref={descriptionElementRef}
@@ -115,8 +117,8 @@ export default function Modal() {
                 onChange={(e) => {
                   saveTempData(e, "firstName");
                 }}
-                value={formData.firstName}
-                fullWidth="true"
+                value={formData.firstName || ""}
+                fullWidth
                 id="outlined-basic"
                 variant="outlined"
               />
@@ -137,8 +139,8 @@ export default function Modal() {
                 onChange={(e) => {
                   saveTempData(e, "lastName");
                 }}
-                value={formData.lastName}
-                fullWidth="true"
+                value={formData.lastName || ""}
+                fullWidth
                 id="outlined-basic"
                 variant="outlined"
               />
@@ -170,7 +172,7 @@ export default function Modal() {
                   <FormControlLabel
                     value="inactive"
                     control={<Radio />}
-                    label="inactive"
+                    label="Inactive"
                   />
                 </RadioGroup>
               </Box>
@@ -179,8 +181,15 @@ export default function Modal() {
         </DialogContent>
 
         <DialogActions>
-          <Button fullWidth="true" variant="contained" onClick={handleSave}>
-            save
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={handleSave}
+            disabled={
+              !formData.firstName || !formData.lastName || !formData.status
+            }
+          >
+            Save
           </Button>
         </DialogActions>
       </Box>
