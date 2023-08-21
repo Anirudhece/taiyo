@@ -8,24 +8,23 @@ const removeElementAtIndex = (array, index) => {
   }
   return array;
 };
-const contacts = [
-  {
-    id: "",
-    firstName: "",
-    lastName: "",
-    status: "",
-  },
-];
 
 const contactScreen = createSlice({
   name: "contactScreen",
-  initialState: { contacts, isOpen: false, contactCount: 0 },
+  initialState: { contacts: [], isOpen: false },
 
   reducers: {
     modalReducer: (state, action) => {
       state.isOpen = action.payload.isOpen;
     },
+    saveContactInfoReducer: (state, action) => {
+      const newContact = {
+        id: Date.now(),
+        ...action.payload,
+      };
+      state.contacts.push(newContact);
+    },
   },
 });
-export const { modalReducer } = contactScreen.actions;
+export const { modalReducer, saveContactInfoReducer } = contactScreen.actions;
 export default contactScreen.reducer;

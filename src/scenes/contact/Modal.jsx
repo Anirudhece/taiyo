@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -16,7 +16,10 @@ import {
 } from "@mui/material";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useDispatch, useSelector } from "react-redux";
-import { modalReducer } from "../../store/slices/ContactSlice";
+import {
+  modalReducer,
+  saveContactInfoReducer,
+} from "../../store/slices/ContactSlice";
 
 export default function Modal() {
   const dispatch = useDispatch();
@@ -24,16 +27,16 @@ export default function Modal() {
   const { isOpen } = useSelector((state) => state.contact);
 
   const scroll = "body";
-  const purposeDropArray = ["JOB", "INTERNSHIP", "CONTRACT"];
 
   const handleClose = () => {
     dispatch(modalReducer({ isOpen: false }));
+    setFormData({});
   };
 
   const handleSave = () => {
-    const id = Date.now();
-    //   dispatch(saveAssessmentInvoice({ id }));
+    dispatch(saveContactInfoReducer(formData));
     handleClose();
+    setFormData({});
   };
   const descriptionElementRef = useRef(null);
   useEffect(() => {
@@ -44,6 +47,15 @@ export default function Modal() {
       }
     }
   }, [isOpen]);
+
+  const [formData, setFormData] = useState({});
+
+  const saveTempData = (e, key) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [key]: e.target.value,
+    }));
+  };
 
   return (
     <Dialog
@@ -100,6 +112,10 @@ export default function Modal() {
                 First Name:
               </Typography>
               <TextField
+                onChange={(e) => {
+                  saveTempData(e, "firstName");
+                }}
+                value={formData.firstName}
                 fullWidth="true"
                 id="outlined-basic"
                 variant="outlined"
@@ -118,6 +134,10 @@ export default function Modal() {
                 Last Name:
               </Typography>
               <TextField
+                onChange={(e) => {
+                  saveTempData(e, "lastName");
+                }}
+                value={formData.lastName}
                 fullWidth="true"
                 id="outlined-basic"
                 variant="outlined"
@@ -137,8 +157,10 @@ export default function Modal() {
               <Box>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
-                  //   defaultValue="female"
                   name="radio-buttons-group"
+                  onChange={(e) => {
+                    saveTempData(e, "status");
+                  }}
                 >
                   <FormControlLabel
                     value="Active"

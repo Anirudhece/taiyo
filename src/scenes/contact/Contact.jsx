@@ -5,18 +5,19 @@ import Heading from "../../components/Heading";
 import { useSelector, useDispatch } from "react-redux";
 import { modalReducer } from "../../store/slices/ContactSlice";
 import Modal from "./Modal";
+import ContactInfo from "../../components/ContactInfo";
 
 function Contact() {
   const dispatch = useDispatch();
-  const { isOpen } = useSelector((state) => state.contact);
+  const { contacts } = useSelector((state) => state.contact);
+
   const addContacts = () => {
     dispatch(modalReducer({ isOpen: true }));
-    console.log(isOpen);
   };
 
   return (
     <>
-      <Box mt={5} sx={{ display: "flex", justifyContent: "center" }}>
+      <Box mt={5} mb={5} sx={{ display: "flex", justifyContent: "center" }}>
         <Box
           onClick={addContacts}
           className="NewAssessment-clickable"
@@ -73,6 +74,17 @@ function Contact() {
         </Box>
       </Box>
       <Modal />
+      <Box display="flex" flexDirection="row" flexWrap="wrap">
+        {contacts.length > 0 ? (
+          contacts.map((ele, ind) => (
+            <ContactInfo ele={ele} key={ele.id} index={ind} />
+          ))
+        ) : (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            no contact details available
+          </Box>
+        )}
+      </Box>
     </>
   );
 }
