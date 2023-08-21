@@ -1,12 +1,20 @@
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
-function ContactInfo({ ele }) {
+import { useDispatch } from "react-redux";
+import { deleteReducer } from "../store/slices/ContactSlice";
+function ContactInfo({ ele, index }) {
+  const dispatch = useDispatch();
+
+  const deleteContact = (index) => {
+    dispatch(deleteReducer({ index }));
+  };
+  
   return (
     <>
       <Box
         sx={{
           display: "flex",
-            justifyContent: "space-evenly",
+          justifyContent: "space-evenly",
           p: "10px",
           ml: "10px",
           mr: "10px",
@@ -24,7 +32,14 @@ function ContactInfo({ ele }) {
             <Button m={2} variant="contained" color="success">
               edit
             </Button>
-            <Button m={2} variant="contained" color="error">
+            <Button
+              onClick={() => {
+                deleteContact(index);
+              }}
+              m={2}
+              variant="contained"
+              color="error"
+            >
               delete
             </Button>
           </Box>

@@ -24,7 +24,12 @@ const contactScreen = createSlice({
       };
       state.contacts.push(newContact);
     },
+    deleteReducer: (state, action) => {
+      const { index } = action.payload;
+      state.contacts = removeElementAtIndex(state.contacts, index);
+    },
   },
 });
-export const { modalReducer, saveContactInfoReducer } = contactScreen.actions;
+export const { modalReducer, saveContactInfoReducer, deleteReducer } =
+  contactScreen.actions;
 export default contactScreen.reducer;
