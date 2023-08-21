@@ -4,6 +4,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import SideDrawer from "./scenes/global/sidebar/SideBar";
 import Topbar from "./scenes/global/topbar/TopBar";
 import ChartsMaps from "./scenes/chatsMaps/ChartsMaps";
+import Contact from "./scenes/contact/Contact";
 
 function App() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -28,13 +29,14 @@ function App() {
       <Box
         style={{
           marginLeft: isCollapsible ? 0 : "140px",
-          background: "var(--system-background, #F6F8FA)",
+          // background: "var(--system-background, #F6F8FA)",
         }}
       >
         <Box ml="10px" mr="10px">
           <Topbar isCollapsible={isCollapsible} />
           <Routes>
             <Route path="/" element={<Navigate to="/Contact" />} />
+            <Route path="/Contact" element={<Contact />} />
             <Route path="/Charts&Maps" element={<ChartsMaps />} />
             {/* <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/MyLibrary" element={<MyLibrary />} />
