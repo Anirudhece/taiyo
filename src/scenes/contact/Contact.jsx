@@ -5,6 +5,7 @@ import Heading from "../../components/Heading";
 import { useSelector, useDispatch } from "react-redux";
 import { modalReducer } from "../../store/slices/ContactSlice";
 import Modal from "./Modal";
+import EditModal from "./EditModal";
 import ContactInfo from "../../components/ContactInfo";
 
 function Contact() {
@@ -74,6 +75,7 @@ function Contact() {
         </Box>
       </Box>
       <Modal />
+      <EditModal />
       <Box display="flex" flexDirection="row" flexWrap="wrap">
         {contacts.length > 0 ? (
           contacts.map((ele, ind) => (

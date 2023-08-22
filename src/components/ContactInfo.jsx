@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { deleteReducer } from "../store/slices/ContactSlice";
+import { deleteReducer, editModalReducer } from "../store/slices/ContactSlice";
 function ContactInfo({ ele, index }) {
   const dispatch = useDispatch();
 
@@ -9,6 +9,10 @@ function ContactInfo({ ele, index }) {
     dispatch(deleteReducer({ index }));
   };
   
+  const editContact = (index) => {
+    dispatch(editModalReducer({ index:index, isOpenEdit: true }));
+  };
+
   return (
     <>
       <Box
@@ -29,7 +33,14 @@ function ContactInfo({ ele, index }) {
             </Box>
           </Box>
           <Box>
-            <Button m={2} variant="contained" color="success">
+            <Button
+              onClick={() => {
+                editContact(index);
+              }}
+              m={2}
+              variant="contained"
+              color="success"
+            >
               edit
             </Button>
             <Button
