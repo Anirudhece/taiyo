@@ -16,23 +16,40 @@ import {
 } from "@mui/material";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useDispatch, useSelector } from "react-redux";
-import { editContactReducer,editModalReducer } from "../../store/slices/ContactSlice";
+import {
+  editContactReducer,
+  editModalReducer,
+} from "../../store/slices/ContactSlice";
 
 export default function EditModal() {
   const dispatch = useDispatch();
 
-  const { isOpenEdit } = useSelector((state) => state.contact);
+  const { isOpenEdit, contacts, editIndex } = useSelector(
+    (state) => state.contact
+  );
+
+  const contactToEdit = contacts[editIndex];
+  const firstName = contactToEdit ? contactToEdit.firstName : "";
+  const lastName = contactToEdit ? contactToEdit.lastName : "";
+  const status = contactToEdit ? contactToEdit.status : "";
+
+  const [formData, setFormData] = useState({
+    firstName: firstName,
+    lastName: lastName,
+    status: status,
+  });
 
   const scroll = "body";
 
   const handleClose = () => {
     dispatch(editModalReducer({ isOpenEdit: false, index: null }));
     setFormData({});
+    // console.log(contacts[editIndex].firstName);
   };
 
   const handleSave = () => {
     if (formData.firstName && formData.lastName && formData.status) {
-      dispatch(editContactReducer(formData));
+      dispatch(editContactReducer({ index: editIndex, data: formData }));
       handleClose();
       setFormData({});
     }
@@ -46,8 +63,6 @@ export default function EditModal() {
       }
     }
   }, [isOpenEdit]);
-
-  const [formData, setFormData] = useState({});
 
   const saveTempData = (e, key) => {
     setFormData((prevFormData) => ({
@@ -114,7 +129,7 @@ export default function EditModal() {
                 onChange={(e) => {
                   saveTempData(e, "firstName");
                 }}
-                value={formData.firstName || ""}
+                value={formData.firstName}
                 fullWidth
                 id="outlined-basic"
                 variant="outlined"
@@ -136,7 +151,7 @@ export default function EditModal() {
                 onChange={(e) => {
                   saveTempData(e, "lastName");
                 }}
-                value={formData.lastName || ""}
+                value={formData.lastName}
                 fullWidth
                 id="outlined-basic"
                 variant="outlined"
@@ -157,6 +172,7 @@ export default function EditModal() {
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
                   name="radio-buttons-group"
+                  value={formData.status}
                   onChange={(e) => {
                     saveTempData(e, "status");
                   }}

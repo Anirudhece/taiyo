@@ -11,15 +11,20 @@ const removeElementAtIndex = (array, index) => {
 
 const contactScreen = createSlice({
   name: "contactScreen",
-  initialState: { contacts: [], isOpen: false ,isOpenEdit:false,editIndex:null},
+  initialState: {
+    contacts: [],
+    isOpen: false,
+    isOpenEdit: false,
+    editIndex: null,
+  },
 
   reducers: {
     modalReducer: (state, action) => {
       state.isOpen = action.payload.isOpen;
     },
 
-    editModalReducer:(state,action)=>{
-      state.editIndex=action.payload.index;
+    editModalReducer: (state, action) => {
+      state.editIndex = action.payload.index;
       state.isOpenEdit = action.payload.isOpenEdit;
     },
 
@@ -31,8 +36,9 @@ const contactScreen = createSlice({
       state.contacts.push(newContact);
     },
 
-    editContactReducer:(state,action)=>{
-
+    editContactReducer: (state, action) => {
+      const { index, data } = action.payload;
+      state.contacts[index] = { id: state.contacts[index].id, ...data };
     },
 
     deleteReducer: (state, action) => {
@@ -41,6 +47,11 @@ const contactScreen = createSlice({
     },
   },
 });
-export const { modalReducer, saveContactInfoReducer, deleteReducer,editModalReducer,editContactReducer } =
-  contactScreen.actions;
+export const {
+  modalReducer,
+  saveContactInfoReducer,
+  deleteReducer,
+  editModalReducer,
+  editContactReducer,
+} = contactScreen.actions;
 export default contactScreen.reducer;
