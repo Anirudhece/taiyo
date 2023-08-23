@@ -6,6 +6,7 @@ import Topbar from "./scenes/global/topbar/TopBar";
 import ChartsMaps from "./scenes/chatsMaps/ChartsMaps";
 import Contact from "./scenes/contact/Contact";
 
+
 function App() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -37,10 +38,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/Contact" />} />
             <Route path="/Contact" element={<Contact />} />
-            <Route path="/Charts&Maps" element={<ChartsMaps />} />
-            {/* <Route path="/Dashboard" element={<Dashboard />} />
-            <Route path="/MyLibrary" element={<MyLibrary />} />
-            <Route path="/RoundStatus" element={<RoundStatus />} /> */}
+            <Route path="/ChartsMaps" element={<ChartsMaps />} />
           </Routes>
         </Box>
       </Box>
