@@ -2,7 +2,10 @@ import React from "react";
 import { Box } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css"; // without this it wont work
+import "leaflet/dist/leaflet.css"; // not in the docs but necessary
+import L from "leaflet";
+
+const icon = L.icon({ iconUrl: "/images/marker-icon.png" });
 
 function Map() {
   const fetchWorldwideData = async () => {
@@ -41,14 +44,15 @@ function Map() {
     <Marker
       key={country.country}
       position={[country.countryInfo.lat, country.countryInfo.long]}
+      icon={icon}
     >
       <Popup>
-        <div>
+        <Box>
           <h3>{country.country}</h3>
           <p>Total Cases: {country.cases}</p>
           <p>Recovered: {country.recovered}</p>
           <p>Deaths: {country.deaths}</p>
-        </div>
+        </Box>
       </Popup>
     </Marker>
   ));
