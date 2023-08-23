@@ -33,11 +33,15 @@ export default function EditModal() {
   const lastName = contactToEdit ? contactToEdit.lastName : "";
   const status = contactToEdit ? contactToEdit.status : "";
 
-  const [formData, setFormData] = useState({
-    firstName: firstName,
-    lastName: lastName,
-    status: status,
-  });
+  const [formData, setFormData] = useState({ firstName: '', lastName: '', status: '' });
+
+  useEffect(() => {
+    if (firstName && lastName && status) {
+      setFormData({ firstName, lastName, status });
+    }
+  }, [firstName, lastName, status]);
+
+
 
   const scroll = "body";
 
